@@ -82,10 +82,11 @@ void InitializeCarTools()
         [](const PropertyList &) -> ReturnValue { CarSet(250, 0, 0, true); return true; });
     mcp.AddTool("self.car.back", "让小车后退", PropertyList(),
         [](const PropertyList &) -> ReturnValue { CarSet(-250, 0, 0, true); return true; });
-    mcp.AddTool("self.car.left", "让小车左转", PropertyList(),
-        [](const PropertyList &) -> ReturnValue { CarSet(0, 0, 350, true); return true; });
-    mcp.AddTool("self.car.right", "让小车右转", PropertyList(),
-        [](const PropertyList &) -> ReturnValue { CarSet(0, 0, -350, true); return true; });
+    /* 阿克曼要边走边转才能画圆；vx=0 时轮子不动，只打方向 */
+    mcp.AddTool("self.car.left", "让小车左转画弧（前进同时左转）", PropertyList(),
+        [](const PropertyList &) -> ReturnValue { CarSet(250, 0, 350, true); return true; });
+    mcp.AddTool("self.car.right", "让小车右转画弧（前进同时右转）", PropertyList(),
+        [](const PropertyList &) -> ReturnValue { CarSet(250, 0, -350, true); return true; });
     mcp.AddTool("self.car.stop", "让小车立即停止", PropertyList(),
         [](const PropertyList &) -> ReturnValue { CarSet(0, 0, 0, false); return true; });
 }

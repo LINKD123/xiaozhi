@@ -6,6 +6,8 @@
 
 官方小智源码：[78/xiaozhi-esp32](https://github.com/78/xiaozhi-esp32)
 
+**理解整条语音 / 大模型 / MCP 链路：** 见 [docs/小智语音链路说明.md](docs/小智语音链路说明.md)（从麦到 Opus、服务器 ASR、大模型输入输出、再回到板子开车）。
+
 ---
 
 ## 目标架构
@@ -92,6 +94,8 @@ STM32 USART1：PA9 TX / PA10 RX，115200 8N1。排针实际有线的只有：
 - **不要发 ASCII**（例如 `FWD`），会打乱 0x5A 组帧
 
 MCP 工具：`self.car.forward/back/left/right/stop`
+
+阿克曼底盘和 Nano 时期一样：**画圆 = 线速度 + 角速度一起发**。`0x01` 里 STM32 会用 `atan(wz * 轴距 / vx)` 把角速度换成前轮转角。`left`/`right` 已带 `vx=0.25 m/s`，持续发就会走圆弧。`vx=0` 时轮子不转，不是原地自转。
 
 ---
 
